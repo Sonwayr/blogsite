@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load blog_tags %}
+
+{% block main %}
+
+{% show_info title %}
+
+{% endblock %}
+
+{% block content %}
+
+<section id="service">
+    <div class="container">
+        <div class="single-item text-center">
+            <h1 class="post-h">{{profile}}</h1>
+            <div class="profile-info">
+                <div class='home-text-profile'>
+
+                    <h4 class="post-h">Імя: {{profile.first_name}} {{ profile.last_name}}</h4>
+                    <h4 class="post-h">Нікнейм: {{profile.username}}</h4>
+
+                </div>
+
+                {% if profile.photo %}
+                <div class='home-text-profile text-center'>
+                    <img src="{{profile.photo.url}}">
+                </div>
+                {% else %}
+                <img src="#">
+                {% endif %}
+                <div class="home-text-profile">
+
+                    {% if profile.pk == request.user.pk %}
+                    <h4 class="post-h">Підписників: {{profile.subscribers}}</h4>
+                    <h4 class="post-h"><a href="{% url 'show_liked_posts' %}" class="red-btn">Лайкнуті</a></h4>
+                    <h4 class="post-h"><a href="{% url 'show_saved_posts' %}" class="red-btn">Збережені</a></h4>
+                    <h4 class="post-h"><a href="{% url 'users:show_subscribes' %}" class="red-btn">Підписки</a></h4>
+                    <h4><a href="{% url 'users:redact_profile' %}" class="red-btn">Відредагувати профіль</a></h4>
+                    {% else %}
+                    <h4 class="post-h">Підписників: <a href="{% url 'users:subscribe' profile.pk %}">{{profile.subscribers}}</a></h4>
+
+                    {% endif %}
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="container">
+        <div class="home-text text-center">
+            <h4>Пости від цього користувача</h4>
+        </div>
+        {% for post in posts %}
+        {% show_post_tag post a_lot=True draft=draft %}
+        {% endfor %}
+
+    </div>
+</section>
+
+{% endblock %}
+{% block navigation %}
+{% paginate page_obj %}
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load blog_tags %}
+
+{% block main %}
+{% show_info posts_type %}
+
+{% endblock %}
+{% block content %}
+<section id="service">
+    <form action="{{ request.path }}" method="get" class="text-center">
+
+        <input type="text" name="search" class="search-input" placeholder="Пошук по назві або темі">
+        <button type="submit" class="search-button">пошук</button>
+
+        {% if search %}
+        <a class="search-button" href="{{ request.path }}">скидання</a>
+        {% endif %}
+
+    </form>
+
+
+    <div class="container">
+        {% for post in posts %}
+        {% show_post_tag post a_lot=True draft=draft %}
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
+{% block navigation %}
+{% paginate page_obj %}
+{% endblock %}

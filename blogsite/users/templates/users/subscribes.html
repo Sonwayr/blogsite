@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load blog_tags %}
+
+{% block main %}
+{% show_info title %}
+{% endblock %}
+
+{% block content %}
+<section id="service">
+    <div class="container">
+        {% for profile in subscribes %}
+        <div class="single-item text-center">
+            <h1 class="post-h">{{profile}}</h1>
+            <div class="profile-info">
+                <div class='home-text-profile'>
+
+                    <h4 class="post-h">Імя: {{profile.first_name}} {{ profile.last_name}}</h4>
+                    <h4 class="post-h">Нікнейм: {{profile.username}}</h4>
+
+                </div>
+
+                {% if profile.photo %}
+                <div class='home-text-profile text-center'>
+                    <img src="{{profile.photo.url}}">
+                </div>
+                {% else %}
+                <img src="#">
+                {% endif %}
+                <div class="home-text-profile">
+
+
+                    <h4 class="post-h">Підписників: <a href="{% url 'users:subscribe' profile.pk %}">{{profile.subscribers}}</a>
+                    </h4>
+
+
+                </div>
+
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
+</section>
+{% endblock %}

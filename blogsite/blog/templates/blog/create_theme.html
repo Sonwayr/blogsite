@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load blog_tags %}
+
+{% block main %}
+
+{% show_info title %}
+
+{% endblock %}
+
+{% block content %}
+<section id="contact">
+    {% show_form form btn_name %}
+</section>
+    {% endblock %}

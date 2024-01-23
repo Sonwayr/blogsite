@@ -1,0 +1,51 @@
+<div class="single-item text-center">
+    <h4 class="pull-left">Тема: {{post.theme}}</h4>
+    <h4 class="pull-right">Час створення: {{post.time_create}}</h4>
+    {% if not from_profile %}
+    <h4 class="text-center">Автор: <a href="{% url 'users:profile' post.author.pk %}">{{post.author}}</a></h4>
+    {% else %}
+    <h4 class="text-center">Автор: {{post.author}}</h4>
+    {% endif %}
+    <h1 class="post-h">{{ post.title }}</h1>
+    {% if a_lot %}
+    <h2 class="post-h">{{ post.content|truncatechars:100|linebreaks }}</h2>
+    {% else %}
+    <h2 class="post-h">{{ post.content|linebreaks }}</h2>
+    {% endif %}
+    {% if post.photo %}
+    <h3 class="post-h"><img src="{{ post.photo.url }}"></h3>
+    {% endif %}
+    {% if a_lot %}
+
+    {% if not draft %}
+    <h1 class="post-h"><a
+            href="{{ post.get_absolute_url }}"
+            class="btn btn-red text-uppercase">Читати пост</a>
+
+    </h1>
+    {% else %}
+    <h1 class="post-h"><a
+            href="{% url 'show_draft_post' post.slug %}"
+            class="btn btn-red text-uppercase">Читати пост</a>
+
+    </h1>
+    {% endif %}
+    {% else %}
+    <h1 class="post-h"><a
+            href="{% url 'show_all_posts' %}"
+            class="btn btn-red text-uppercase">Назад</a>
+    </h1>
+    {% endif %}
+    {% if a_lot %}
+    <h4 class="pull-right">Лайків:{{ post.liked }} Дизлайків:{{ post.disliked }} Збережень:{{ post.saved }}</h4>
+
+    {% else %}
+
+    <h4 class="pull-right"><a href="{% url 'like_post' post.pk %}">Лайків:{{ post.liked }}</a> <a
+            href="{% url 'dislike_post' post.pk %}">Дизлайків:{{ post.disliked }}</a>
+        <a href="{% url 'save_post' post.pk %}">Збережень:{{ post.saved }}</a>
+    </h4>
+
+    {% endif %}
+
+</div>

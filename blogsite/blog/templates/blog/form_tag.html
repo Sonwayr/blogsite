@@ -1,0 +1,29 @@
+<div class="contact-form">
+    <div class="container">
+        <div class="row">
+            {% if delete %}
+            <h1 class="home-text text-center">Ви впевнені, що хочете видалити?</h1>
+            {% else %}
+            <h1 class="home-text text-center">Будь ласка, заповніть форму,
+                <span>та натисніть на кнопку "{{btn_name}}"</span></h1>
+            {% endif %}
+
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-error">{{ form.non_field_errors }}</div>
+                {% for f in form %}
+
+                <p><label for="{{ f.id_for_label }}" class="form-control">{{f.label}}: </label>{{ f }}
+                </p>
+                <div class="form-error">{{ f.errors }}</div>
+                {% endfor %}
+
+
+                <div class="text-center">
+                    <button type="submit" class="btn red-btn">{{btn_name}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

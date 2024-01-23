@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load blog_tags %}
+
+{% block content %}
+<section id="service">
+    <div class="container">
+
+        {% show_post_tag post %}
+        {% if request.user == post.author %}
+        <div class="container text-right">
+
+            <h1 class="post-h"><a class="red-btn" href="{% url 'redact_my_post' post.slug %}">Відредагувати</a></h1>
+            <h1 class="post-h"><a class="red-btn" href="{% url 'delete_post' post.slug %}">Видалити</a></h1>
+
+        </div>
+        {% else %}
+        {% if perms.blog.change_post %}
+        <div class="container text-right">
+
+            <h1 class="post-h"><a class="red-btn" href="{% url 'redact_post' post.slug %}">Відредагувати</a></h1>
+
+        </div>
+        {% endif %}
+        {% if perms.blog.delete_post %}
+        <div class="container text-right">
+            <h1 class="post-h"><a class="red-btn" href="{% url 'delete_post' post.slug %}">Видалити</a></h1>
+        </div>
+        {% endif %}
+        {% endif %}
+
+    </div>
+
+</section>
+{% endblock %}
